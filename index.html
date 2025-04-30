@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ChatBuddy</title>
+  </head>
+  <body>
+    <h1>ChatBuddy</h1>
+    <textarea id="prompt" rows="4" cols="50"></textarea><br /><br />
+    <button onclick="sendMessage()">Send</button>
+    <h2>Response:</h2>
+    <div id="response"></div>
+
+    <script>
+      async function sendMessage() {
+        const prompt = document.getElementById("prompt").value;
+        const responseDiv = document.getElementById("response");
+
+        const res = await fetch("http://127.0.0.1:5000/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: prompt }),
+        });
+
+        const data = await res.json();
+        responseDiv.innerText = data.response;
+      }
+    </script>
+  </body>
+</html>
